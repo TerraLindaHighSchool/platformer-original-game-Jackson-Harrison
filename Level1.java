@@ -50,17 +50,17 @@ public class Level1 extends World
         addObject(new Bomb(GRAVITY), 600, 450);
         addObject(new Trapdoor(GRAVITY), 425, 600);
         addObject(new Trapdoor(GRAVITY), 875, 250);
-        addObject(new Floor(), 600, 800);
+        addObject(new Floor(), 600, 700);
         addObject(new Gem(), 150, 450);
         addObject(new Gem(), 175, 50);
     }
     private void spawn()
     {
-        if(Math.random() < 0.0005)
+        if(Math.random() < 0.05)
         {
             addObject(new Rock(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
         }
-        if(Math.random() < 0.0003)
+        if(Math.random() < 0.03)
         {
             addObject(new AcidRain(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
         }
