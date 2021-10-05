@@ -35,7 +35,7 @@ public class Level1 extends World
         addObject(door,754,248);
         removeObject(door);
         addObject(door,1176,40);
-        Player player = new Player();
+        Player player = new Player(3, 5.6f, GRAVITY, 3, 3, Level2.class, player.Music);
         addObject(player,25,671);
         addObject(new SmBrickWall(), 175, 100);
         addObject(new SmBrickWall(), 125, 500);
