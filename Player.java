@@ -124,7 +124,7 @@ public class Player extends Actor
     }
     private void animator() 
     {
-        if(frame % (48 - 4 * speed) == 0)
+        if(frame % (8) == 0)
         {
             if(walkIndex < WALK_ANIMATION.length)
             {
@@ -136,8 +136,37 @@ public class Player extends Actor
                 walkIndex = 0;
             }
         }
+        frame++;
     }
-    private void onCollision() {}
+    private void onCollision() 
+    {
+        if(isTouching(Door.class))
+        {
+            World world = null;
+             try 
+                {
+                    world = (World) NEXT_LEVEL.newInstance();
+                }
+            catch (InstantiationException e) 
+                {
+                    System.out.println("Class cannot be instantiated");
+                } 
+            catch (IllegalAccessException e) 
+            {
+                System.out.println("Cannot access class constructor");
+            } 
+            Greenfoot.setWorld(world);
+        }
+        if(isTouching(Rock.class))
+        {
+            removeTouching(Rock.class);
+        }
+        if(isTouching(Platform.class) && !isOnGround())
+        {
+            yVelocity = -1;
+            fall();
+        }
+    }    
     private void mirrorImages()
     {
         for(int i = 0; i < WALK_ANIMATION.length; i++)
