@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Level1 extends World
 {
-    private final float GRAVITY = 0.0007f;
+    private final float GRAVITY = 0.0667f;
     private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
     /**
      * Constructor for objects of class BrickWorld.
@@ -37,7 +37,7 @@ public class Level1 extends World
         removeObject(door);
         addObject(door,1176,40);
         Player player = new Player(3, 5.6f, GRAVITY, 3, 3, Level2.class, MUSIC);
-        addObject(player,25,671);
+        addObject(player,25,600);
         addObject(new SmBrickWall(), 175, 100); 
         addObject(new SmBrickWall(), 125, 500);
         addObject(new SmBrickWall(), 600, 150);
@@ -56,11 +56,11 @@ public class Level1 extends World
     }
     private void spawn()
     {
-        if(Math.random() < 0.05)
+        if(Math.random() < 0.002)
         {
             addObject(new Rock(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
         }
-        if(Math.random() < 0.03)
+        if(Math.random() < 0.001)
         {
             addObject(new AcidRain(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
         }

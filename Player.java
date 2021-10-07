@@ -14,7 +14,7 @@ public class Player extends Actor
     private int speed;
     private int walkIndex;
     private int frame; 
-    private float yVelocity;
+    private float yVelocity = 1;
     private boolean isWalking;
     private boolean isJumping;
     private boolean isFacingLeft;
@@ -119,11 +119,12 @@ public class Player extends Actor
         {
             setLocation(getX(), getY() - (int) yVelocity);
             yVelocity -= GRAVITY;
+            System.out.println (yVelocity);
         }
     }
     private void animator() 
     {
-        if(frame % (15 - 4 * speed) == 0)
+        if(frame % (48 - 4 * speed) == 0)
         {
             if(walkIndex < WALK_ANIMATION.length)
             {
@@ -137,12 +138,18 @@ public class Player extends Actor
         }
     }
     private void onCollision() {}
-    private void mirrorImages() {}
+    private void mirrorImages()
+    {
+        for(int i = 0; i < WALK_ANIMATION.length; i++)
+        {
+            WALK_ANIMATION[i].mirrorHorizontally();
+        }
+    }
     private void gameOver() {}
     private boolean isOnGround() 
     {
        Actor ground = getOneObjectAtOffset(0, getImage().getHeight() / 2,
                                             Platform.class);
-        return ground != null; 
+        return ground != null;
     }
 }
