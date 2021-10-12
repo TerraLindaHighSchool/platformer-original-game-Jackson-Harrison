@@ -24,6 +24,9 @@ public class Player extends Actor
     private final float JUMP_FORCE;
     private final Class NEXT_LEVEL;
     public final GreenfootSound Music;
+    private final GreenfootSound JUMPSOUND = new GreenfootSound("jump.wav");
+    private final GreenfootSound DOORSOUND = new GreenfootSound("door_open.wav");
+    private final GreenfootSound HURTSOUND = new GreenfootSound("explosionSmall.wav");
     public Player(int speed, float jumpforce, float gravity, int maxHealth,
     int maxPowerUp, Class nextLevel, GreenfootSound music)
     {
@@ -81,6 +84,10 @@ public class Player extends Actor
         }
         if(Greenfoot.isKeyDown("right"))
         {
+            if(!Music.isPlaying())
+            {
+                Music.playLoop();
+            }
             if(isFacingLeft)
             {
                 mirrorImages();
@@ -112,6 +119,10 @@ public class Player extends Actor
         {
             yVelocity = JUMP_FORCE;
             isJumping = true;
+            if(!JUMPSOUND.isPlaying())
+            {
+                JUMPSOUND.play();
+            }
         }
         
         if(isJumping && yVelocity > 0.0)
@@ -152,6 +163,11 @@ public class Player extends Actor
     {
         if(isTouching(Door.class))
         {
+            if(!DOORSOUND.isPlaying())
+            {
+                DOORSOUND.play();
+            }
+            Music.stop();
             World world = null;
              try 
                 {
@@ -169,6 +185,10 @@ public class Player extends Actor
         }
         if(isTouching(Obstacle.class))
         {
+            if(!HURTSOUND.isPlaying())
+            {
+                HURTSOUND.play();
+            }
             removeTouching(Obstacle.class);
             getWorld().removeObject(health[healthCount -1]);
             healthCount--;
@@ -190,6 +210,7 @@ public class Player extends Actor
     {
         if(healthCount == 0)
         {
+            Music.stop();
             Greenfoot.setWorld(new Level1());
         }
     }
