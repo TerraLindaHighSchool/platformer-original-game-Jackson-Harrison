@@ -11,15 +11,16 @@ public class Player extends Actor
     private Health[] health;
     private PowerUp[] powerup;
     private int healthCount;
+    private int fireCoolDown = 0;
     private int speed;
     private int walkIndex;
     private int frame; 
     private float yVelocity = 1;
     private boolean isWalking;
     private boolean isJumping;
-    private boolean isFacingLeft;
+    public static boolean isFacingLeft;
     private final GreenfootImage[] WALK_ANIMATION;
-    private final GreenfootImage STANDING_IMAGE;
+    private final GreenfootImage player1;
     private final float GRAVITY;
     private final float JUMP_FORCE;
     private final Class NEXT_LEVEL;
@@ -39,7 +40,7 @@ public class Player extends Actor
         healthCount = maxHealth;
         health = new Health[maxHealth];
         
-        STANDING_IMAGE = getImage();
+        player1 = getImage();
         WALK_ANIMATION = new GreenfootImage[]
                          {
                              new GreenfootImage("walk0.png"),
@@ -60,6 +61,24 @@ public class Player extends Actor
         fall();
         onCollision();
         gameOver();
+        checkFire();
+    }
+    private void checkFire()
+    {
+        if(Greenfoot.isKeyDown("space") && fireCoolDown <= 0) 
+        {
+           if(isFacingLeft == false)
+           {
+               getWorld().addObject(new RightPew(), getX()+10, getY());
+               fireCoolDown = 25;
+           }
+           else
+           {
+               getWorld().addObject(new LeftPew(), getX()+10, getY());
+               fireCoolDown = 25;
+           }
+        }
+        fireCoolDown --;
     }
     public void addedToWorld(World world) 
     {
@@ -75,14 +94,14 @@ public class Player extends Actor
     {
         if(isWalking)
         {
-            animator();
+            setImage(player1);
         }
         else
         {
-            setImage(STANDING_IMAGE);
+            setImage(player1);
             walkIndex = 0;
         }
-        if(Greenfoot.isKeyDown("right"))
+        if(Greenfoot.isKeyDown("d"))
         {
             if(!Music.isPlaying())
             {
@@ -95,9 +114,9 @@ public class Player extends Actor
             isFacingLeft = false;
             isWalking = true;
             
-            move(speed + 1);
+            move(speed + 5);
         }
-        if(Greenfoot.isKeyDown("left"))
+        if(Greenfoot.isKeyDown("a"))
         {
             if(!isFacingLeft)
             {
@@ -106,16 +125,16 @@ public class Player extends Actor
             isFacingLeft = true;
             isWalking = true;
             
-            move(-speed - 1);
+            move(-speed - 5);
         }
-        if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")))
+        if(!(Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("d")))
         {
             isWalking = false;
         }
     }
     private void jump()
     {
-        if(Greenfoot.isKeyDown("space") && isOnGround())
+        if(Greenfoot.isKeyDown("w") && isOnGround())
         {
             yVelocity = JUMP_FORCE;
             isJumping = true;
@@ -127,8 +146,8 @@ public class Player extends Actor
         
         if(isJumping && yVelocity > 0.0)
         {
-            setLocation(getX(), getY() - (int) yVelocity);
-            yVelocity -= GRAVITY;
+            setLocation(getX(), getY() - (int) (2 * yVelocity));
+            yVelocity -= (4 * GRAVITY);
         }
         else
         {
@@ -140,7 +159,7 @@ public class Player extends Actor
         if(!isOnGround() && !isJumping)
         {
             setLocation(getX(), getY() - (int) yVelocity);
-            yVelocity -= GRAVITY;
+            yVelocity -= (4 * GRAVITY);
         }
     }
     private void animator() 
@@ -201,10 +220,7 @@ public class Player extends Actor
     }    
     private void mirrorImages()
     {
-        for(int i = 0; i < WALK_ANIMATION.length; i++)
-        {
-            WALK_ANIMATION[i].mirrorHorizontally();
-        }
+        player1.mirrorHorizontally();
     }
     private void gameOver() 
     {
