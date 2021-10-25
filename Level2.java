@@ -66,10 +66,6 @@ public class Level2 extends World
         {
             addObject(new Rock(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
         }
-        if(Math.random() < 0.003)
-        {
-            addObject(new AcidRain(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
-        }
     }
     
 }
