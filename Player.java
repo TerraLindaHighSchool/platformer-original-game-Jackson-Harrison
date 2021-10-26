@@ -8,6 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends Actor
 {
+    private int AmmoCount = 3;
+    private int teleportDelay = 120;
     private Health[] health;
     private PowerUp[] powerup;
     private int healthCount;
@@ -65,7 +67,7 @@ public class Player extends Actor
     }
     private void checkFire()
     {
-        if(Greenfoot.isKeyDown("space") && fireCoolDown <= 0) 
+        if(Greenfoot.isKeyDown("space") && fireCoolDown <= 0 && AmmoCount > 0) 
         {
            if(isFacingLeft == false)
            {
@@ -77,7 +79,13 @@ public class Player extends Actor
                getWorld().addObject(new LeftPew(), getX()+10, getY());
                fireCoolDown = 25;
            }
+           AmmoCount --;
         }
+        if(AmmoCount < 0)
+        {
+            AmmoCount = 0;
+        }
+        
         fireCoolDown --;
     }
     public void addedToWorld(World world) 
@@ -127,6 +135,19 @@ public class Player extends Actor
             
             move(-speed - 5);
         }
+        if(Greenfoot.isKeyDown("s") && healthCount == 3 && teleportDelay <= 0)
+        {
+            if(!isFacingLeft)
+            {
+                move(100);
+            }
+            else
+            {
+                move (-100);
+            }
+            teleportDelay = 120;
+        }
+        teleportDelay --;
         if(!(Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("d")))
         {
             isWalking = false;
@@ -216,6 +237,10 @@ public class Player extends Actor
         {
             yVelocity = -1;
             fall();
+        }
+        if(isTouching(AmmoBoost.class))
+        {
+            AmmoCount = 3;
         }
     }    
     private void mirrorImages()
