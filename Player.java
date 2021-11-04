@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends Actor
 {
-    private int AmmoCount = 3;
+    private int AmmoCount = 0;
     private int teleportDelay = 120;
     private Health[] health;
     private PowerUp[] powerup;
@@ -113,7 +113,7 @@ public class Player extends Actor
         {
             if(!Music.isPlaying())
             {
-                Music.playLoop();
+                //Music.playLoop();
             }
             if(isFacingLeft)
             {
@@ -241,6 +241,7 @@ public class Player extends Actor
         if(isTouching(AmmoBoost.class))
         {
             AmmoCount = 3;
+            removeTouching(AmmoBoost.class);
         }
     }    
     private void mirrorImages()

@@ -40,24 +40,24 @@ public class Level1 extends World
         Door door = new Door();
         addObject(door,754,248);
         removeObject(door);
-        addObject(door,1176,40);
         Player player = new Player(SPEED, JUMP_FORCE, GRAVITY, MAX_HEALTH, 
                                    MAX_POWERUP, NEXT_LEVEL, MUSIC);
-        addObject(player,25,600);
-        addObject(new SmBrickWall(), 175, 100); 
-        addObject(new SmBrickWall(), 125, 500);
-        addObject(new SmBrickWall(), 600, 150);
+        
+        addObject(player,25,780);
+        addObject(door,1100,90);
+        addObject(new SmBrickWall(), 450, 680); 
         addObject(new SmBrickWall(), 1100, 150);
-        addObject(new SmBrickWall(), 1000, 250);
-        addObject(new SmBrickWall(), 925, 350);
         addObject(new SmBrickWall(), 1075, 650);
         addObject(new AmmoBoost(), 1075, 619);
-        addObject(new BrickWall(), 350, 350);
-        addObject(new BrickWall(), 800, 500);
-        addObject(new Blocker(GRAVITY), 600, 450);
-        addObject(new Trapdoor(GRAVITY), 425, 600);
+        addObject(new BrickWall(), 350, 400);
+        addObject(new BrickWall(), 520, 220);
+        addObject(new BrickWall(), 800, 550);
+        addObject(new Blocker(GRAVITY), 560, 350);
+        addObject(new Blocker(GRAVITY), 510, 350);
+        addObject(new Blocker(GRAVITY), 460, 350);
+        addObject(new Blocker(GRAVITY), 410, 350);
         addObject(new Trapdoor(GRAVITY), 875, 250);
-        addObject(new Floor(), 600, 700);
+        addObject(new Floor(), 600, 800);
 
     }
     private void spawn()
